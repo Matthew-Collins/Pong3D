@@ -1,0 +1,96 @@
+' Gambas class file
+
+Public Window As New Window(True) As "Window"
+Public Camera As New Camera
+
+Public Table As New Table
+Public TopRail As New Rail(True)
+Public BottomRail As New Rail(False)
+Public LeftBat As New Bat(True)
+Public RightBat As New Bat(False)
+Public Ball As New Ball
+
+Public Draws As Integer
+
+Public Sub _new()
+
+  With Window
+    .Resize(1600, 1080)
+    .Resizable = True
+    .Text = "Pong 3D"
+  End With
+
+End
+
+Public Sub Window_Open()
+
+  Me.Camera.Open(Me.Window)
+
+End
+
+Public Sub Window_Resize()
+
+  Me.Camera.Resize(Me.Window)
+
+End
+
+Public Sub Window_Draw()
+
+  'Me.Camera.Rotate.y += 0.5
+
+  Me.Camera.Update(Me.Window)
+  Me.Ball.CheckForCollesions(Me)
+
+  Me.Table.Draw()
+  Me.TopRail.Draw()
+  Me.BottomRail.Draw()
+  Me.LeftBat.Draw()
+  Me.RightBat.Draw()
+  Me.Ball.Draw()
+
+  ' Me.Draws += 1
+  ' Print Me.Draws
+
+End
+
+Public Sub Window_KeyPress()
+
+  If Key.Code = Key.F1 Then Window.Fullscreen = Not Window.Fullscreen
+  If Key.Code = key.Esc Then Window.Close()
+
+  If Key.Code = Key["a"] Then Me.LeftBat.Velocity.z = -0.02
+  If Key.Code = Key["z"] Then Me.LeftBat.Velocity.z = 0.02
+
+  If Key.Code = Key.Up Then Me.RightBat.Velocity.z = -0.02
+  If Key.Code = Key.Down Then Me.RightBat.Velocity.z = 0.02
+
+  If Key.Code = Key.Left Then Camera.x -= 1
+  If Key.Code = Key.Right Then Camera.x += 1
+
+  If Key.Code = Key.PageUp Then Camera.z -= 1
+  If Key.Code = Key.PageDown Then Camera.z += 1
+
+  If Key.Code = Key.Space Then Camera.Zoom += 1
+
+  If Key.Code = Key.F4 Then Ball.Reset()
+
+  If Key.Code = Key.F5 Then Camera.Rotate.x += 1
+  If Key.Code = Key.F6 Then Camera.Rotate.x -= 1
+  If Key.Code = Key.F7 Then Camera.Rotate.y += 1
+  If Key.Code = Key.F8 Then Camera.Rotate.y -= 1
+  If Key.Code = Key.F9 Then Camera.y += 1
+  If Key.Code = Key.F10 Then Camera.y -= 1
+  If Key.Code = Key.F11 Then Camera.Angle += 1
+  If Key.Code = Key.F12 Then Camera.Angle -= 1
+
+End
+
+Public Sub Window_KeyRelease()
+
+  If Key.Code = Key["a"] Then Me.LeftBat.Velocity.z = 0
+  If Key.Code = Key["z"] Then Me.LeftBat.Velocity.z = 0
+
+  If Key.Code = Key.Up Then Me.RightBat.Velocity.z = 0
+  If Key.Code = Key.Down Then Me.RightBat.Velocity.z = 0
+
+End

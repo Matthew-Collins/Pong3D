@@ -1,0 +1,62 @@
+' Gambas class file
+
+Inherits Sphere
+
+Public Sub _new()
+
+  ' Me.x = -1
+  ' Me.y = -1
+  ' Me.z = -4
+
+  Me.Size.x = 0.1
+  Me.Size.y = 0.1
+  Me.Size.z = 0.1
+
+  Me.y += 0.1
+
+  Me.Velocity.x = 0.01
+  Me.Velocity.z = -0.01
+
+End
+
+Public Sub Reset()
+
+  Me.x = 0
+  Me.y = 0.1
+  Me.z = 0
+
+End
+
+Public Sub CheckForCollesions(Screen As Screen)
+
+  Me.CheckForCollesionX(Screen.LeftBat)
+  Me.CheckForCollesionX(Screen.RightBat)
+  Me.CheckForCollesionZ(Screen.TopRail)
+  Me.CheckForCollesionZ(Screen.BottomRail)
+  Me.CheckForCollesionY(Screen.Table)
+
+End Sub
+
+Public Sub CheckForCollesionX(Other As Shape)
+
+  If Me.IntersectsXZ(Other) Then
+    Me.Velocity.x = - Me.Velocity.x
+  Endif
+
+End
+
+Public Sub CheckForCollesionZ(Other As Shape)
+
+  If Me.IntersectsXZ(Other) Then
+    Me.Velocity.z = - Me.Velocity.z
+  Endif
+
+End
+
+Public Sub CheckForCollesionY(Other As Shape)
+
+  If Not Me.IntersectsXZ(Other) Then
+    Me.y -= 0.008
+  Endif
+
+End

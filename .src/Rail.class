@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits Box
+
+Public Sub _new(Top As Boolean)
+
+  ' Me.x = -1
+  ' Me.y = -1
+  ' Me.z = -4
+
+  Me.Size.x = 2
+  Me.Size.y = 0.1
+  Me.Size.z = 0.1
+
+  Me.y += 0.1
+
+  If Top Then
+    Me.z += 0.45
+  Else
+    Me.z -= 0.45
+  Endif
+
+End
